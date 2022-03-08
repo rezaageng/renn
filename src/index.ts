@@ -1,7 +1,8 @@
-import { Client } from "discord.js"
+import { Client, Collection } from "discord.js"
 import "dotenv/config"
+import config from "./config"
 
-const client = new Client({
+const client: any = new Client({
   partials: ["CHANNEL"],
   intents: [
     "GUILDS",
@@ -14,9 +15,13 @@ const client = new Client({
 
 let bot = {
   client,
-  dev: process.env.DEV,
+  dev: config.DEV,
 }
 
-console.log("hello")
+client.commands = new Collection()
+client.on("ready", () => {
+  console.log(`${client.user?.tag} is online!`)
+  client.user?.setActivity("Your Voice", { type: "LISTENING" })
+})
 
-client.login(process.env.TOKEN)
+client.login(config.TOKEN)
