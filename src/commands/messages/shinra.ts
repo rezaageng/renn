@@ -31,6 +31,12 @@ export default new Command({
         ephemeral: true,
       })
 
+    if (interaction.channelId !== process.env.ADMINISTRATOR_CHANNEL_ID)
+      return await interaction.reply({
+        content: `Cant use this command outside <#${process.env.ADMINISTRATOR_CHANNEL_ID}>`,
+        ephemeral: true,
+      })
+
     if (channel.type !== "GUILD_TEXT")
       return await interaction.reply({
         content: "Only can send message to text channel!",

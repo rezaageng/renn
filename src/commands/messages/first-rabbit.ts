@@ -22,16 +22,21 @@ export default new Command({
     const member = interaction.options.getMember("member") as GuildMember
     const message = interaction.options.getString("message")
     const admin = process.env.ADMIN_ID
+    if (admin !== interaction.member.id)
+      return await interaction.reply({
+        content: "Sorry, only developers can use this command!",
+        ephemeral: true,
+      })
+
+    if (interaction.channelId !== process.env.FIRST_RABBIT_CHANNEL_ID)
+      return await interaction.reply({
+        content: `Cant use this command outside <#${process.env.FIRST_RABBIT_CHANNEL_ID}>`,
+        ephemeral: true,
+      })
 
     if (member.user.bot)
       return await interaction.reply({
         content: "Can't send message to bot!",
-        ephemeral: true,
-      })
-
-    if (admin !== interaction.member.id)
-      return await interaction.reply({
-        content: "Sorry, only developers can use this command!",
         ephemeral: true,
       })
 
