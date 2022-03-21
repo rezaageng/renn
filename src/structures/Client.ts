@@ -35,10 +35,10 @@ export class ExtendedClient extends Client {
     if (GUILD_ID) {
       this.guilds.cache.get(GUILD_ID)?.commands.set(commands)
       console.log(`registered commands to guild ${GUILD_ID}`)
+    } else {
+      this.application?.commands.set(commands)
+      console.log("Registered global commands")
     }
-
-    this.application?.commands.set(commands)
-    console.log("Registered global commands")
   }
 
   async registerModules() {
@@ -48,10 +48,10 @@ export class ExtendedClient extends Client {
       `${__dirname}/../commands/*/*{.ts,.js}`
     )
 
-    commandFiles.forEach(async (file) => {
+    commandFiles.forEach(async (file, index) => {
       const command: CommandType = await this.importFiles(file)
       if (!command.name) return
-      console.log(command)
+      console.log(`${index + 1}. ${command.name} loaded`)
 
       this.commands.set(command.name, command)
       slashCommands.push(command)
