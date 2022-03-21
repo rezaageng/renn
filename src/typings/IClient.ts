@@ -1,6 +1,6 @@
 import { ApplicationCommandDataResolvable } from "discord.js"
 
-export interface RegisterCommandOptions {
+export interface RegisterCommandsOptions {
   GUILD_ID?: string
   commands: ApplicationCommandDataResolvable[]
 }

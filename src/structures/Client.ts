@@ -7,7 +7,7 @@ import {
 import { glob } from "glob"
 import { promisify } from "util"
 import { CommandType } from "../typings/Command"
-import { RegisterCommandOptions } from "../typings/IClient"
+import { RegisterCommandsOptions } from "../typings/IClient"
 import { Event } from "./Event"
 
 const globPromise = promisify(glob)
@@ -30,7 +30,7 @@ export class ExtendedClient extends Client {
     return (await import(path))?.default
   }
 
-  async registerCommands({ GUILD_ID, commands }: RegisterCommandOptions) {
+  async registerCommands({ GUILD_ID, commands }: RegisterCommandsOptions) {
     if (GUILD_ID) {
       this.guilds.cache.get(GUILD_ID)?.commands.set(commands)
       console.log(`registered commands to guild ${GUILD_ID}`)
@@ -51,6 +51,7 @@ export class ExtendedClient extends Client {
       const command: CommandType = await this.importFiles(file)
 
       if (!command.name) return
+      console.log(command)
       this.commands.set(command.name, command)
       slashCommands.push(command)
     })
