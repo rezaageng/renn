@@ -6,7 +6,7 @@ declare global {
       ADMIN_ID: string
       GUILD_ID: string
       FIRST_RABBIT_CHANNEL_ID: string
-      ENVIROMENT: string
+      ADMINISTRATOR_CHANNEL_ID: string
     }
   }
 }
