@@ -1,8 +1,8 @@
 import { ClientEvents } from "discord.js"
 
-export class Event<key extends keyof ClientEvents> {
+export class Event<Key extends keyof ClientEvents> {
   constructor(
-    public event: key,
-    public run: (...args: ClientEvents[key]) => any
+    public event: Key,
+    public run: (...args: ClientEvents[Key]) => any
   ) {}
 }

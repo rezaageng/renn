@@ -4,7 +4,7 @@ import {
   ClientEvents,
   Collection,
 } from "discord.js"
-import { glob } from "glob"
+import glob from "glob"
 import { promisify } from "util"
 import { CommandType } from "../typings/Command"
 import { RegisterCommandsOptions } from "../typings/IClient"
@@ -23,6 +23,7 @@ export class ExtendedClient extends Client {
   }
 
   start() {
+    this.registerModules()
     this.login(process.env.TOKEN)
   }
 
@@ -30,7 +31,7 @@ export class ExtendedClient extends Client {
     return (await import(path))?.default
   }
 
-  async registerCommands({ GUILD_ID, commands }: RegisterCommandsOptions) {
+  async registerCommands({ commands, GUILD_ID }: RegisterCommandsOptions) {
     if (GUILD_ID) {
       this.guilds.cache.get(GUILD_ID)?.commands.set(commands)
       console.log(`registered commands to guild ${GUILD_ID}`)
@@ -49,11 +50,18 @@ export class ExtendedClient extends Client {
 
     commandFiles.forEach(async (file) => {
       const command: CommandType = await this.importFiles(file)
-
       if (!command.name) return
       console.log(command)
+
       this.commands.set(command.name, command)
       slashCommands.push(command)
+    })
+
+    this.on("ready", () => {
+      this.registerCommands({
+        commands: slashCommands,
+        GUILD_ID: process.env.GUILD_ID,
+      })
     })
 
     // * events
