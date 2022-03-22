@@ -15,12 +15,14 @@ export default new Event("messageCreate", async (message) => {
     })
   }
 
-  // * anon-message event
-  if (message.channel.id === process.env.ANON_CHANNEL_ID) {
+  // * sharing-session channel event
+  if (message.channel.id === process.env.DEBUG_CHANNEL_ID) {
+    const msg = message.content
+
     return message.startThread({
-      name: `${message.author.username} - ${new Date(
-        message.createdTimestamp
-      ).toLocaleDateString()}`,
+      name: `${msg.length > 20 ? msg.substring(0, 20) + "..." : msg} - ${
+        message.author.username
+      } - ${new Date(message.createdTimestamp).toLocaleDateString()}`,
       autoArchiveDuration: 1440,
     })
   }

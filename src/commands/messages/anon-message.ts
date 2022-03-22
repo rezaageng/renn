@@ -14,7 +14,7 @@ export default new Command({
   ],
   run: async ({ interaction, client }) => {
     const anonChannel = client.channels.cache.find(
-      (ch) => ch.id === process.env.ANON_CHANNEL_ID
+      (ch) => ch.id === process.env.SHARE_CHANNEL_ID
     ) as TextChannel
     const debugChannel = process.env.DEBUG_CHANNEL_ID
     const message = interaction.options.getString("message")
