@@ -11,6 +11,7 @@ export default new Command({
       name: "text-channel",
       description: "select text channel",
       type: "CHANNEL",
+      channel_types: [0],
       required: true,
     },
     {
