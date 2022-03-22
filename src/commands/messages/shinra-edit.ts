@@ -1,6 +1,4 @@
-import { channel } from "diagnostics_channel"
 import { TextChannel } from "discord.js"
-import G from "glob"
 import { Command } from "../../structures/Command"
 
 export default new Command({
