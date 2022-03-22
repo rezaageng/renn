@@ -26,4 +26,9 @@ export default new Event("messageCreate", async (message) => {
       autoArchiveDuration: 1440,
     })
   }
+
+  // * anonymous-channel event
+  if (message.channel.id === process.env.ANON_CHANNEL_ID) {
+    if (message.author.id !== client.user.id) message.delete()
+  }
 })
