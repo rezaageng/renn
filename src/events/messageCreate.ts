@@ -16,7 +16,7 @@ export default new Event("messageCreate", async (message) => {
   }
 
   // * sharing-session channel event
-  if (message.channel.id === process.env.DEBUG_CHANNEL_ID) {
+  if (message.channel.id === process.env.SHARE_CHANNEL_ID) {
     const msg = message.content
 
     return message.startThread({
