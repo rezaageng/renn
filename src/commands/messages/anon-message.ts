@@ -16,12 +16,16 @@ export default new Command({
     const anonChannel = client.channels.cache.find(
       (ch) => ch.id === process.env.ANON_CHANNEL_ID
     ) as TextChannel
-
+    const debugChannel = process.env.DEBUG_CHANNEL_ID
     const message = interaction.options.getString("message")
 
-    if (interaction.channelId !== process.env.ANON_CHANNEL_ID)
+    if (
+      interaction.channel.type !== "DM" &&
+      interaction.channelId !== process.env.ANON_CHANNEL_ID &&
+      interaction.channelId !== debugChannel
+    )
       return await interaction.reply({
-        content: `Cant use this command outside <#${process.env.ANON_CHANNEL_ID}>`,
+        content: `This command only can use in <#${process.env.ANON_CHANNEL_ID}> and Direct Message`,
         ephemeral: true,
       })
 
