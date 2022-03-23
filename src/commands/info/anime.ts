@@ -35,7 +35,9 @@ export default new Command({
 
     const animeEmbed = new MessageEmbed()
       .setColor("#712B75")
-      .setTitle(anime.attributes.titles.en_jp)
+      .setTitle(
+        anime.attributes.titles.en_jp || anime.attributes.canonicalTitle
+      )
       .setURL(`https://kitsu.io/anime/${anime.id}`)
       .setDescription(anime.attributes.synopsis)
       .setThumbnail(anime.attributes.posterImage.small)
