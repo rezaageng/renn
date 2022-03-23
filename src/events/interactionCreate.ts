@@ -16,13 +16,17 @@ export default new Event("interactionCreate", async (interaction) => {
   }
 
   if (interaction.isButton()) {
-    const button = client.buttons.get(interaction.customId)
-    console.log(button)
+    const [name, action, user] = interaction.customId.split("-")
+    const button = client.buttons.get(name)
     if (!button) return interaction.reply("Button not found")
+
+    console.log(action, user)
 
     button.run({
       client,
       interaction: interaction,
+      action,
+      user,
     })
   }
 })

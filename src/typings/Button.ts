@@ -4,6 +4,8 @@ import { ExtendedClient } from "../structures/Client"
 interface RunButtonOptions {
   client: ExtendedClient
   interaction: ButtonInteraction
+  action: string
+  user: string
 }
 
 type RunButtonFunction = (options: RunButtonOptions) => Promise<void>

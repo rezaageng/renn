@@ -11,6 +11,7 @@ declare global {
       ANON_CHANNEL_ID: string
       SHARE_CHANNEL_ID: string
       DEBUG_CHANNEL_ID: string
+      SUGGESTION_CHANNEL_ID: string
     }
   }
 }
