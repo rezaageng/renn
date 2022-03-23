@@ -60,9 +60,7 @@ export default new Command({
           ephemeral: true,
         })
 
-      serverMember.send(
-        message + "\n\n`this message sent with anonymous command`"
-      )
+      serverMember.send("`anon:` " + message)
     }
 
     if (user) {
@@ -73,7 +71,7 @@ export default new Command({
           ephemeral: true,
         })
 
-      userId.send(message + "\n\n`this message sent with anonymous command`")
+      userId.send("`anon:` " + message)
     }
 
     return await interaction.reply({
