@@ -1,3 +1,4 @@
+import chalk from "chalk"
 import {
   ApplicationCommandDataResolvable,
   Client,
@@ -36,10 +37,10 @@ export class ExtendedClient extends Client {
   async registerCommands({ commands, GUILD_ID }: RegisterCommandsOptions) {
     if (GUILD_ID) {
       this.guilds.cache.get(GUILD_ID)?.commands.set(commands)
-      console.log(`registered commands to guild ${GUILD_ID}`)
+      console.log(chalk.green(`\nregistered commands to guild ${GUILD_ID}`))
     } else {
       this.application?.commands.set(commands)
-      console.log("Registered global commands")
+      console.log(chalk.green("\nRegistered global commands"))
     }
   }
 
@@ -50,6 +51,7 @@ export class ExtendedClient extends Client {
       `${__dirname}/../commands/*/*{.ts,.js}`
     )
 
+    console.log(chalk.magenta("\nCommands:"))
     commandFiles.forEach(async (file, index) => {
       const command: CommandType = await this.importFiles(file)
       if (!command.name) return
@@ -71,6 +73,7 @@ export class ExtendedClient extends Client {
       `${__dirname}/../buttons/*/*{.ts,.js}`
     )
 
+    console.log(chalk.magenta("\nButtons:"))
     buttonFiles.forEach(async (file, index) => {
       const buttons: ButtonType = await this.importFiles(file)
       if (!buttons.name) return
@@ -82,8 +85,11 @@ export class ExtendedClient extends Client {
     // * events
     const eventFiles = await globPromise(`${__dirname}/../events/*{.ts,.js}`)
 
-    eventFiles.forEach(async (file) => {
+    console.log(chalk.magenta("\nEvents:"))
+    eventFiles.forEach(async (file, index) => {
       const event: Event<keyof ClientEvents> = await this.importFiles(file)
+      console.log(`${index + 1}. ${event.event} loaded`)
+
       this.on(event.event, event.run)
     })
   }
