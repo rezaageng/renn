@@ -28,7 +28,9 @@ export default new Event("messageCreate", async (message) => {
   }
 
   // * anonymous-channel event
-  if (message.channel.id === process.env.ANON_CHANNEL_ID) {
-    if (message.author.id !== client.user.id) message.delete()
-  }
+  if (
+    message.channel.id === process.env.ANON_CHANNEL_ID &&
+    message.author.id !== client.user.id
+  )
+    message.delete()
 })
