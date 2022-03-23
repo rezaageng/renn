@@ -6,6 +6,7 @@ import {
 } from "discord.js"
 import glob from "glob"
 import { promisify } from "util"
+import { ButtonType } from "../typings/Button"
 import { CommandType } from "../typings/Command"
 import { RegisterCommandsOptions } from "../typings/IClient"
 import { Event } from "./Event"
@@ -14,6 +15,7 @@ const globPromise = promisify(glob)
 
 export class ExtendedClient extends Client {
   commands: Collection<string, CommandType> = new Collection()
+  buttons: Collection<string, ButtonType> = new Collection()
 
   constructor() {
     super({
@@ -62,6 +64,19 @@ export class ExtendedClient extends Client {
         commands: slashCommands,
         GUILD_ID: process.env.GUILD_ID,
       })
+    })
+
+    // *button
+    const buttonFiles = await globPromise(
+      `${__dirname}/../buttons/*/*{.ts,.js}`
+    )
+
+    buttonFiles.forEach(async (file, index) => {
+      const buttons: ButtonType = await this.importFiles(file)
+      if (!buttons.name) return
+      console.log(`${index + 1}. ${buttons.name} loaded`)
+
+      this.buttons.set(buttons.name, buttons)
     })
 
     // * events

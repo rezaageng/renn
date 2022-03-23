@@ -14,4 +14,15 @@ export default new Event("interactionCreate", async (interaction) => {
       interaction: interaction as ExtendedInteraction,
     })
   }
+
+  if (interaction.isButton()) {
+    const button = client.buttons.get(interaction.customId)
+    console.log(button)
+    if (!button) return interaction.reply("Button not found")
+
+    button.run({
+      client,
+      interaction: interaction,
+    })
+  }
 })
