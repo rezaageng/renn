@@ -16,7 +16,6 @@ export default new Command({
   run: async ({ interaction }) => {
     const search = interaction.options.getString("search")
     const manga = await getManga(search)
-    const genres = await getGenres(manga.relationships.genres.links.related)
 
     if (
       interaction.channelId !== process.env.COMMANDS_CHANNEL_ID &&
@@ -29,11 +28,11 @@ export default new Command({
 
     if (!manga)
       return await interaction.reply({
-        content: "manga not found",
+        content: "Manga not found",
         ephemeral: true,
       })
 
-    console.log(manga)
+    const genres = await getGenres(manga.relationships.genres.links.related)
     const mangaEmbed = new MessageEmbed()
       .setColor("#712B75")
       .setTitle(

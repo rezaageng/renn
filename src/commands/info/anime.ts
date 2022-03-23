@@ -16,7 +16,6 @@ export default new Command({
   run: async ({ interaction }) => {
     const search = interaction.options.getString("search")
     const anime = await getAnime(search)
-    const genres = await getGenres(anime.relationships.genres.links.related)
 
     if (
       interaction.channelId !== process.env.COMMANDS_CHANNEL_ID &&
@@ -33,6 +32,7 @@ export default new Command({
         ephemeral: true,
       })
 
+    const genres = await getGenres(anime.relationships.genres.links.related)
     const animeEmbed = new MessageEmbed()
       .setColor("#712B75")
       .setTitle(
