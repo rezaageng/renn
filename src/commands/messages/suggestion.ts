@@ -31,15 +31,16 @@ export default new Command({
       new MessageButton()
         .setLabel("Accept")
         .setStyle("PRIMARY")
-        .setCustomId(`suggestion-accept-${interaction.user.id}`),
+        .setCustomId(`suggestion-accepted-${interaction.user.id}`),
       new MessageButton()
         .setLabel("Reject")
         .setStyle("DANGER")
-        .setCustomId(`suggestion-reject-${interaction.user.id}`),
+        .setCustomId(`suggestion-rejected-${interaction.user.id}`),
       new MessageButton()
         .setLabel("Done")
         .setStyle("SUCCESS")
-        .setCustomId(`suggestion-done-${interaction.user.id}`)
+        .setCustomId(`suggestion-finished-${interaction.user.id}`)
+        .setDisabled(true)
     )
 
     await suggestionChannel.send({

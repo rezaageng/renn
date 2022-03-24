@@ -8,7 +8,7 @@ interface RunButtonOptions {
   user: string
 }
 
-type RunButtonFunction = (options: RunButtonOptions) => Promise<void>
+type RunButtonFunction = (options: RunButtonOptions) => Promise<any>
 
 export type ButtonType = {
   name: string

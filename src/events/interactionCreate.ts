@@ -20,8 +20,6 @@ export default new Event("interactionCreate", async (interaction) => {
     const button = client.buttons.get(name)
     if (!button) return interaction.reply("Button not found")
 
-    console.log(action, user)
-
     button.run({
       client,
       interaction: interaction,
