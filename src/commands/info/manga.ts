@@ -44,12 +44,12 @@ export default new Command({
       .addFields(
         {
           name: ":star: Rating",
-          value: `${manga.attributes.averageRating} / 100`,
+          value: `${manga.attributes.averageRating || "?"} / 100`,
           inline: true,
         },
         {
           name: ":trophy: Rank",
-          value: `#${manga.attributes.ratingRank}`,
+          value: `#${manga.attributes.ratingRank || "?"}`,
           inline: true,
         },
         {
@@ -59,27 +59,29 @@ export default new Command({
         },
         {
           name: ":hourglass_flowing_sand: Status",
-          value: `${manga.attributes.status}`,
+          value: `${manga.attributes.status || "?"}`,
           inline: true,
         },
         {
           name: ":book: Type",
-          value: `${manga.attributes.subtype}`,
+          value: `${manga.attributes.subtype || "?"}`,
           inline: true,
         },
         {
           name: ":calendar_spiral: Published",
-          value: `from ${manga.attributes.startDate} to ${manga.attributes.endDate}`,
+          value: `from ${manga.attributes.startDate || "?"} to ${
+            manga.attributes.endDate || "?"
+          }`,
           inline: false,
         },
         {
           name: ":newspaper:  Chapters",
-          value: `${manga.attributes.chapterCount} chs`,
+          value: `${manga.attributes.chapterCount || "?"} chs`,
           inline: true,
         },
         {
           name: ":books: Volumes",
-          value: `${manga.attributes.volumeCount} vols`,
+          value: `${manga.attributes.volumeCount || "?"} vols`,
           inline: true,
         }
       )

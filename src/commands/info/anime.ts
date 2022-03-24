@@ -44,12 +44,12 @@ export default new Command({
       .addFields(
         {
           name: ":star: Rating",
-          value: `${anime.attributes.averageRating} / 100`,
+          value: `${anime.attributes.averageRating || "?"} / 100`,
           inline: true,
         },
         {
           name: ":trophy: Rank",
-          value: `#${anime.attributes.ratingRank}`,
+          value: `#${anime.attributes.ratingRank || "?"}`,
           inline: true,
         },
         {
@@ -59,27 +59,31 @@ export default new Command({
         },
         {
           name: ":hourglass_flowing_sand: Status",
-          value: `${anime.attributes.status}`,
+          value: `${anime.attributes.status || "?"}`,
           inline: true,
         },
         {
           name: ":tv: Type",
-          value: `${anime.attributes.subtype}`,
+          value: `${anime.attributes.subtype || "?"}`,
           inline: true,
         },
         {
           name: ":calendar_spiral: Aired",
-          value: `from ${anime.attributes.startDate} to ${anime.attributes.endDate}`,
+          value: `from ${anime.attributes.startDate || "?"} to ${
+            anime.attributes.endDate || "?"
+          }`,
           inline: false,
         },
         {
           name: ":film_frames: Total Episodes",
-          value: `${anime.attributes.episodeCount} episodes`,
+          value: `${anime.attributes.episodeCount || "?"} episodes`,
           inline: true,
         },
         {
           name: ":film_frames: Duration",
-          value: `${anime.attributes.episodeLength} minutes per episodes`,
+          value: `${
+            anime.attributes.episodeLength || "?"
+          } minutes per episodes`,
           inline: true,
         }
       )
