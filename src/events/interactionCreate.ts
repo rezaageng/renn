@@ -8,6 +8,15 @@ export default new Event("interactionCreate", async (interaction) => {
     const command = client.commands.get(interaction.commandName)
     if (!command) return interaction.reply("Command not found")
 
+    if (
+      process.env.DEBUG_MODE &&
+      interaction.channelId !== process.env.DEBUG_CHANNEL_ID
+    )
+      return interaction.reply({
+        content: "You cannot use bots in development!",
+        ephemeral: true,
+      })
+
     command.run({
       args: interaction.options as CommandInteractionOptionResolver,
       client,
@@ -22,7 +31,7 @@ export default new Event("interactionCreate", async (interaction) => {
 
     button.run({
       client,
-      interaction: interaction,
+      interaction,
       action,
       user,
     })
