@@ -20,14 +20,21 @@ export default new Command({
     },
     {
       name: "name",
-      description: "search",
+      description: "character name",
       type: "STRING",
       required: true,
+    },
+    {
+      name: "character-level",
+      description: "fill with character level",
+      type: "INTEGER",
+      required: false,
     },
   ],
   run: async ({ interaction }) => {
     const category = interaction.options.getString("category")
     const name = interaction.options.getString("name")
+    const statsLevel = interaction.options.getInteger("character-level")
 
     if (category === "character") {
       const data = genshindb.characters(name)
@@ -37,6 +44,50 @@ export default new Command({
           content: "Character not found",
           ephemeral: true,
         })
+
+      if (statsLevel) {
+        const charaStats = data.stats(statsLevel)
+
+        if (!charaStats)
+          return interaction.reply({
+            content: "Please enter a valid level",
+            ephemeral: true,
+          })
+
+        const charaStatsEmbed = new MessageEmbed()
+          .setColor("#712B75")
+          .setThumbnail(data.images.icon)
+          .setTitle(data.name)
+          .addFields(
+            { name: "Level", value: `${charaStats.level}`, inline: true },
+            {
+              name: "Ascension",
+              value: `${charaStats.ascension}`,
+              inline: true,
+            },
+            { name: "HP", value: `${Math.round(charaStats.hp)}`, inline: true },
+            {
+              name: "Attack",
+              value: `${Math.round(charaStats.attack)}`,
+              inline: true,
+            },
+            {
+              name: "Defense",
+              value: `${Math.round(charaStats.defense)}`,
+              inline: true,
+            },
+            {
+              name: `${data.substat}`,
+              value: `${
+                data.substat !== "Elemental Mastery"
+                  ? Math.round(charaStats.specialized * 100) + "%"
+                  : Math.round(charaStats.specialized)
+              }`,
+            }
+          )
+
+        return await interaction.reply({ embeds: [charaStatsEmbed] })
+      }
 
       const characterEmbed = new MessageEmbed()
         .setColor("#712B75")
@@ -60,6 +111,8 @@ export default new Command({
           { name: "Chinese VA", value: data.cv.chinese, inline: true },
           { name: "Korean VA", value: data.cv.korean, inline: true }
         )
+
+      console.log(data.costs)
 
       return await interaction.reply({ embeds: [characterEmbed] })
     }
