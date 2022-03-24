@@ -36,8 +36,8 @@ export default new Button({
       components: [components],
     })
 
-    return await interaction.followUp(
+    return (await interaction.followUp(
       `Suggestion ${action} by ${interaction.user}`
-    )
+    )) as Message
   },
 })

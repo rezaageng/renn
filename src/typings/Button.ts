@@ -1,4 +1,4 @@
-import { ButtonInteraction, PermissionResolvable } from "discord.js"
+import { ButtonInteraction, Message, PermissionResolvable } from "discord.js"
 import { ExtendedClient } from "../structures/Client"
 
 interface RunButtonOptions {
@@ -8,7 +8,7 @@ interface RunButtonOptions {
   user: string
 }
 
-type RunButtonFunction = (options: RunButtonOptions) => Promise<any>
+type RunButtonFunction = (options: RunButtonOptions) => Promise<void | Message>
 
 export type ButtonType = {
   name: string
