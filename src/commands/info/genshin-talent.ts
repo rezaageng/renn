@@ -1,6 +1,7 @@
 import { MessageEmbed } from "discord.js"
 import { Command } from "../../structures/Command"
 import genshindb, { CombatTalentDetail } from "genshin-db"
+import { ExtendedPassiveTalentDetail } from "../../typings/GenshinDb"
 
 export default new Command({
   name: "genshin-talent",
@@ -23,6 +24,7 @@ export default new Command({
         { name: "Passive Skill 1", value: "passive1" },
         { name: "Passive Skill 2", value: "passive2" },
         { name: "Passive Skill 3", value: "passive3" },
+        { name: "Passive Skill 4", value: "passive4" },
         { name: "Special", value: "special" },
       ],
       required: true,
@@ -53,6 +55,38 @@ export default new Command({
           content: "Level must be between 1 and 15",
           ephemeral: true,
         })
+    }
+
+    let talentPassive = { empty: true } as ExtendedPassiveTalentDetail
+    if (type === "passive1") talentPassive = talent.passive1
+    if (type === "passive2") talentPassive = talent.passive2
+    if (type === "passive3") talentPassive = talent.passive3
+    if (type === "passive4") talentPassive = talent.passive4
+
+    if (!talentPassive || talentPassive.empty)
+      return await interaction.reply({
+        content: "Passive not found",
+        ephemeral: true,
+      })
+
+    if (talentPassive && !talentPassive.empty) {
+      if (level)
+        return await interaction.reply({
+          content: "Level not needed",
+          ephemeral: true,
+        })
+
+      console.log(talentPassive)
+      const passiveEmbed = new MessageEmbed()
+        .setColor("#712B75")
+        .setThumbnail(data.images.icon)
+        .setTitle(data.name)
+        .addFields({
+          name: talentPassive.name,
+          value: `${talentPassive.info || "No description"}`,
+        })
+
+      return await interaction.reply({ embeds: [passiveEmbed] })
     }
 
     let talentType = {} as CombatTalentDetail
