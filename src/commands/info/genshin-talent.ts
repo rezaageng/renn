@@ -4,7 +4,7 @@ import genshindb, { CombatTalentDetail } from "genshin-db"
 
 export default new Command({
   name: "genshin-talent",
-  description: "Search gensgin impact talent",
+  description: "Search genshin impact talent",
   options: [
     {
       name: "character-name",
@@ -23,6 +23,7 @@ export default new Command({
         { name: "Passive Skill 1", value: "passive1" },
         { name: "Passive Skill 2", value: "passive2" },
         { name: "Passive Skill 3", value: "passive3" },
+        { name: "Special", value: "special" },
       ],
       required: true,
     },
@@ -58,6 +59,18 @@ export default new Command({
     if (type === "attack") talentType = talent.combat1
     if (type === "elemental") talentType = talent.combat2
     if (type === "burst") talentType = talent.combat3
+    if (type === "special") {
+      talentType = talent.combatsp
+      if (level) {
+        return await interaction.reply({
+          content: "Level not needed for special skill",
+          ephemeral: true,
+        })
+      }
+    }
+
+    if (!talentType)
+      return interaction.reply({ content: "Talent not found", ephemeral: true })
 
     const outlabels: string[] = []
     const rx = /{(.*?)}/g
