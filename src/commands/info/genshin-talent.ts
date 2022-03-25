@@ -57,38 +57,41 @@ export default new Command({
         })
     }
 
-    let talentPassive = { empty: true } as ExtendedPassiveTalentDetail
-    if (type === "passive1") talentPassive = talent.passive1
-    if (type === "passive2") talentPassive = talent.passive2
-    if (type === "passive3") talentPassive = talent.passive3
-    if (type === "passive4") talentPassive = talent.passive4
+    // * PASSIVE TALENTS
+    if (type.includes("passive")) {
+      let talentPassive = { empty: true } as ExtendedPassiveTalentDetail
+      if (type === "passive1") talentPassive = talent.passive1
+      if (type === "passive2") talentPassive = talent.passive2
+      if (type === "passive3") talentPassive = talent.passive3
+      if (type === "passive4") talentPassive = talent.passive4
 
-    if (!talentPassive || talentPassive.empty)
-      return await interaction.reply({
-        content: "Passive not found",
-        ephemeral: true,
-      })
-
-    if (talentPassive && !talentPassive.empty) {
-      if (level)
+      if (!talentPassive || talentPassive.empty)
         return await interaction.reply({
-          content: "Level not needed",
+          content: "Passive not found",
           ephemeral: true,
         })
 
-      console.log(talentPassive)
-      const passiveEmbed = new MessageEmbed()
-        .setColor("#712B75")
-        .setThumbnail(data.images.icon)
-        .setTitle(data.name)
-        .addFields({
-          name: talentPassive.name,
-          value: `${talentPassive.info || "No description"}`,
-        })
+      if (talentPassive && !talentPassive.empty) {
+        if (level)
+          return await interaction.reply({
+            content: "Level not needed",
+            ephemeral: true,
+          })
 
-      return await interaction.reply({ embeds: [passiveEmbed] })
-    }
+        const passiveEmbed = new MessageEmbed()
+          .setColor("#712B75")
+          .setThumbnail(data.images.icon)
+          .setTitle(data.name)
+          .addFields({
+            name: talentPassive.name,
+            value: `${talentPassive.info || "No description"}`,
+          })
 
+        return await interaction.reply({ embeds: [passiveEmbed] })
+      }
+    } // * END PASSIVE TALENTS
+
+    // * COMBAT TALENTS
     let talentType = {} as CombatTalentDetail
     if (type === "attack") talentType = talent.combat1
     if (type === "elemental") talentType = talent.combat2
