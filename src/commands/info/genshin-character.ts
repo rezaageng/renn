@@ -70,13 +70,21 @@ export default new Command({
         .setThumbnail(data.images.icon)
         .setTitle(data.name)
         .addFields(
-          { name: "Level", value: `${charaStats.level}`, inline: true },
+          {
+            name: "Level",
+            value: `${charaStats.level}`,
+            inline: true,
+          },
           {
             name: "Ascension",
             value: `${charaStats.ascension}`,
             inline: true,
           },
-          { name: "HP", value: `${Math.round(charaStats.hp)}`, inline: true },
+          {
+            name: "HP",
+            value: `${Math.round(charaStats.hp)}`,
+            inline: true,
+          },
           {
             name: "Attack",
             value: `${Math.round(charaStats.attack)}`,
@@ -168,11 +176,23 @@ export default new Command({
         { name: "Substat", value: data.substat, inline: true },
         { name: "Gender", value: data.gender, inline: true },
         { name: "Body", value: data.body, inline: true },
-        { name: "Association", value: data.association || "?", inline: true },
+        {
+          name: "Association",
+          value: data.association || "?",
+          inline: true,
+        },
         { name: "Region", value: data.region || "?", inline: true },
-        { name: "Affiliation", value: data.affiliation || "?", inline: true },
+        {
+          name: "Affiliation",
+          value: data.affiliation || "?",
+          inline: true,
+        },
         { name: "Birthday", value: data.birthday || "?", inline: true },
-        { name: "Constellation", value: data.constellation, inline: true },
+        {
+          name: "Constellation",
+          value: data.constellation,
+          inline: true,
+        },
         { name: "English VA", value: data.cv.english, inline: true },
         { name: "Japanese VA", value: data.cv.japanese, inline: true },
         { name: "Chinese VA", value: data.cv.chinese, inline: true },
