@@ -14,8 +14,8 @@ export default new Command({
     },
     {
       name: "character-level",
-      description: "fill with character level",
-      type: "INTEGER",
+      description: "fill with character level, example: 80 or 80+ for ascend",
+      type: "STRING",
       required: false,
     },
     {
@@ -35,10 +35,10 @@ export default new Command({
   ],
   run: async ({ interaction }) => {
     const name = interaction.options.getString("name")
-    const statsLevel = interaction.options.getInteger("character-level")
+    const statsLevel = interaction.options.getString("character-level")
     const ascension = interaction.options.getInteger("ascension-costs")
 
-    const data = genshindb.characters(name)
+    const data = genshindb.characters(name, { matchAliases: true })
 
     if (!data)
       return interaction.reply({
@@ -53,7 +53,11 @@ export default new Command({
       })
 
     if (statsLevel) {
-      const charaStats = data.stats(statsLevel)
+      const levelAcs = statsLevel.slice(2)
+      const charaStats = data.stats(
+        statsLevel.slice(0, 2) as unknown as number,
+        levelAcs ? "+" : "-"
+      )
 
       if (!charaStats)
         return interaction.reply({
