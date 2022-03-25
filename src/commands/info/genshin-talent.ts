@@ -57,6 +57,12 @@ export default new Command({
         })
     }
 
+    if ((level && type === "special") || (level && type.includes("passive")))
+      return await interaction.reply({
+        content: "Level not needed",
+        ephemeral: true,
+      })
+
     // * PASSIVE TALENTS
     if (type.includes("passive")) {
       let talentPassive = { empty: true } as ExtendedPassiveTalentDetail
@@ -72,12 +78,6 @@ export default new Command({
         })
 
       if (talentPassive && !talentPassive.empty) {
-        if (level)
-          return await interaction.reply({
-            content: "Level not needed",
-            ephemeral: true,
-          })
-
         const passiveEmbed = new MessageEmbed()
           .setColor("#712B75")
           .setThumbnail(data.images.icon)
@@ -96,15 +96,7 @@ export default new Command({
     if (type === "attack") talentType = talent.combat1
     if (type === "elemental") talentType = talent.combat2
     if (type === "burst") talentType = talent.combat3
-    if (type === "special") {
-      talentType = talent.combatsp
-      if (level) {
-        return await interaction.reply({
-          content: "Level not needed for special skill",
-          ephemeral: true,
-        })
-      }
-    }
+    if (type === "special") talentType = talent.combatsp
 
     if (!talentType)
       return interaction.reply({ content: "Talent not found", ephemeral: true })
