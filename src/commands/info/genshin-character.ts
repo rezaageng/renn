@@ -158,16 +158,16 @@ export default new Command({
       .setTitle(data.name)
       .setDescription(data.description)
       .addFields(
-        { name: "Title", value: data.title, inline: true },
+        { name: "Title", value: data.title || "?", inline: true },
         { name: "Element", value: data.element, inline: true },
         { name: "Weapon", value: data.weapontype, inline: true },
         { name: "Substat", value: data.substat, inline: true },
         { name: "Gender", value: data.gender, inline: true },
         { name: "Body", value: data.body, inline: true },
-        { name: "Association", value: data.association, inline: true },
-        { name: "Region", value: data.region, inline: true },
-        { name: "Affiliation", value: data.affiliation, inline: true },
-        { name: "Birthday", value: data.birthday, inline: true },
+        { name: "Association", value: data.association || "?", inline: true },
+        { name: "Region", value: data.region || "?", inline: true },
+        { name: "Affiliation", value: data.affiliation || "?", inline: true },
+        { name: "Birthday", value: data.birthday || "?", inline: true },
         { name: "Constellation", value: data.constellation, inline: true },
         { name: "English VA", value: data.cv.english, inline: true },
         { name: "Japanese VA", value: data.cv.japanese, inline: true },
