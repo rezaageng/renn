@@ -42,7 +42,8 @@ export default new Command({
 
     if (!data)
       return interaction.reply({
-        content: "Character not found",
+        content:
+          "Character not found!\nIf you wanna to search traveler, use aether or lumine instead of traveler",
         ephemeral: true,
       })
 

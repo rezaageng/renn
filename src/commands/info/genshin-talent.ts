@@ -60,10 +60,14 @@ export default new Command({
     const talentCosts = interaction.options.getInteger("talent-costs")
 
     const data = genshindb.characters(name, { matchAliases: true })
-    const talent = genshindb.talents(name)
-    if (!data && !talent)
+    const talent = genshindb.talents(
+      name.includes("aether") || name.includes("lumine") ? "traveler" : name
+    )
+
+    if (!data || !talent)
       return interaction.reply({
-        content: "Character not found",
+        content:
+          "Character talent not found!\nIf you wanna to search traveler, use aether or lumine instead of traveler",
         ephemeral: true,
       })
 
