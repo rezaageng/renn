@@ -35,11 +35,29 @@ export default new Command({
       type: "INTEGER",
       required: false,
     },
+    {
+      name: "talent-costs",
+      description: "name of character",
+      type: "INTEGER",
+      choices: [
+        { name: "Level 2", value: 2 },
+        { name: "Level 3", value: 3 },
+        { name: "Level 4", value: 4 },
+        { name: "Level 5", value: 5 },
+        { name: "Level 6", value: 6 },
+        { name: "Level 7", value: 7 },
+        { name: "Level 8", value: 8 },
+        { name: "Level 9", value: 9 },
+        { name: "Level 10", value: 10 },
+      ],
+      required: false,
+    },
   ],
   run: async ({ interaction }) => {
     const name = interaction.options.getString("character-name")
     const type = interaction.options.getString("talent-type")
     const level = interaction.options.getInteger("talent-level")
+    const talentCosts = interaction.options.getInteger("talent-costs")
 
     const data = genshindb.characters(name, { matchAliases: true })
     const talent = genshindb.talents(name)
@@ -57,11 +75,91 @@ export default new Command({
         })
     }
 
-    if ((level && type === "special") || (level && type.includes("passive")))
+    if (
+      (level && type === "special") ||
+      (level && type.includes("passive")) ||
+      (level && talentCosts)
+    )
       return await interaction.reply({
         content: "Level not needed",
         ephemeral: true,
       })
+
+    // * TALENT COSTS
+    if (talentCosts) {
+      const costs = talent.costs
+      if (!costs)
+        return interaction.reply({ content: "No costs found", ephemeral: true })
+
+      const talentCostsEmbed = new MessageEmbed()
+        .setColor("#712B75")
+        .setThumbnail(data.images.icon)
+        .setTitle(data.name)
+        .setDescription(`Level ${talentCosts}`)
+        .addFields(
+          talentCosts === 2
+            ? costs.lvl2.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 3
+            ? costs.lvl3.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 4
+            ? costs.lvl4.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 5
+            ? costs.lvl5.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 5
+            ? costs.lvl5.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 6
+            ? costs.lvl6.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 7
+            ? costs.lvl7.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 8
+            ? costs.lvl8.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : talentCosts === 9
+            ? costs.lvl9.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+            : costs.lvl10.map((cost) => ({
+                name: cost.name,
+                value: `${cost.count}`,
+                inline: true,
+              }))
+        )
+
+      return await interaction.reply({ embeds: [talentCostsEmbed] })
+    } // * END TALENT COSTS
 
     // * PASSIVE TALENTS
     if (type.includes("passive")) {
