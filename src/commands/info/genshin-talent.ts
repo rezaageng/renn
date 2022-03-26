@@ -86,6 +86,15 @@ export default new Command({
       })
 
     // * TALENT COSTS
+    if (
+      (talentCosts && type === "special") ||
+      (talentCosts && type.includes("passive"))
+    )
+      return await interaction.reply({
+        content: "This talent type does't need costs",
+        ephemeral: true,
+      })
+
     if (talentCosts) {
       const costs = talent.costs
       if (!costs)
