@@ -2,6 +2,7 @@ import { MessageEmbed } from "discord.js"
 import { Command } from "../../structures/Command"
 import genshindb, { CombatTalentDetail } from "genshin-db"
 import { ExtendedPassiveTalentDetail } from "../../typings/GenshinDb"
+import { talentLabelFormat } from "../../functions/genshin-db"
 
 export default new Command({
   name: "genshin-talent",
@@ -212,36 +213,7 @@ export default new Command({
     if (!talentType)
       return interaction.reply({ content: "Talent not found", ephemeral: true })
 
-    const outlabels: string[] = []
-    const rx = /{(.*?)}/g
-    for (let label of talentType.attributes.labels) {
-      const matches = label.matchAll(rx)
-
-      for (const match of matches) {
-        const grab = match[1]
-        const [paramnum, format] = grab.split(":")
-
-        let value = talentType.attributes.parameters[paramnum][
-          level ? level - 1 : 0
-        ] as unknown
-
-        if (format === "I") {
-          label = label.replace(match[0], value as string)
-          continue
-        }
-        if (format.includes("P")) value = (value as number) * 100
-
-        value = (value as number).toFixed(
-          format[1] as unknown as number
-        ) as string
-
-        if (format.includes("P")) value = value + "%"
-        label = label.replace(match[0], value as string)
-      }
-      outlabels.push(label)
-    }
-
-    const talentAttr = outlabels.map((label) => label.replace("|", ": "))
+    const talentAttr = talentLabelFormat(talentType.attributes, level)
 
     const talentEmbed = new MessageEmbed()
       .setColor("#712B75")
@@ -254,7 +226,7 @@ export default new Command({
           "\n\n" +
           talentType.info +
           "\n\n" +
-          talentAttr.join("\n"),
+          talentAttr,
       })
 
     return interaction.reply({

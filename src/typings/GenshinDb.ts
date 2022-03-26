@@ -5,3 +5,8 @@ export class ExtendedPassiveTalentDetail implements PassiveTalentDetail {
   info: string
   empty?: boolean
 }
+
+export interface TalentAttributes {
+  labels: string[]
+  parameters: { [key: string]: number[] }
+}
