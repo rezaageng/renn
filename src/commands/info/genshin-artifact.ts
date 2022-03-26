@@ -4,7 +4,7 @@ import { MessageEmbed } from "discord.js"
 
 export default new Command({
   name: "genshin-artifact",
-  description: "Gets the genshin artifact for a given user.",
+  description: "Search genshin impact artifacts",
   options: [
     {
       name: "name",
