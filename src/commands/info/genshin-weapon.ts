@@ -55,6 +55,15 @@ export default new Command({
 
     const data = genshindb.weapons(name)
 
+    if (
+      interaction.channelId !== process.env.COMMANDS_CHANNEL_ID &&
+      interaction.channelId !== process.env.DEBUG_CHANNEL_ID
+    )
+      return await interaction.reply({
+        content: `Please use this command in  <#${process.env.COMMANDS_CHANNEL_ID}>`,
+        ephemeral: true,
+      })
+
     if (!data)
       return interaction.reply({
         content: "Weapon not found!",

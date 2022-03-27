@@ -24,6 +24,15 @@ export default new Command({
     const data = genshindb.enemies(name)
     const level = interaction.options.getInteger("level")
 
+    if (
+      interaction.channelId !== process.env.COMMANDS_CHANNEL_ID &&
+      interaction.channelId !== process.env.DEBUG_CHANNEL_ID
+    )
+      return await interaction.reply({
+        content: `Please use this command in  <#${process.env.COMMANDS_CHANNEL_ID}>`,
+        ephemeral: true,
+      })
+
     if (!data)
       return await interaction.reply({
         content: "Enemy not found!",

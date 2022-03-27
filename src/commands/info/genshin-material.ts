@@ -28,6 +28,15 @@ export default new Command({
     const name = interaction.options.getString("name")
     let data = {} as Material | string[]
 
+    if (
+      interaction.channelId !== process.env.COMMANDS_CHANNEL_ID &&
+      interaction.channelId !== process.env.DEBUG_CHANNEL_ID
+    )
+      return await interaction.reply({
+        content: `Please use this command in  <#${process.env.COMMANDS_CHANNEL_ID}>`,
+        ephemeral: true,
+      })
+
     if (type === "materials") {
       data = genshindb.materials(name)
 
