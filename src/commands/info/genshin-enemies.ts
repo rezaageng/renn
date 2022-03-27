@@ -39,7 +39,6 @@ export default new Command({
     }
 
     const stats = data.stats(level || 100)
-    console.log(stats)
 
     const enemyEmbed = new MessageEmbed()
       .setColor("#712B75")
