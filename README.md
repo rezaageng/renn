@@ -7,6 +7,7 @@
   <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="">
   <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="">
   <img src="https://img.shields.io/codefactor/grade/github/rezaageng/renn?style=for-the-badge" alt="CodeFactor Grade">
+  <a href="https://wakatime.com/badge/user/15ded74d-a9f6-457a-af7a-8b35101e5a02/project/edfb6260-a161-4b31-9e97-2edcdc4669bf"><img src="https://wakatime.com/badge/user/15ded74d-a9f6-457a-af7a-8b35101e5a02/project/edfb6260-a161-4b31-9e97-2edcdc4669bf.svg?style=for-the-badge" alt="wakatime"></a>
 </div>
 
 ## Installation
