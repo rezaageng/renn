@@ -46,8 +46,8 @@ Commands:
 
 Others:
 
-- [Auto Delete Messages]()
-- [Auto Start Thread]()
+- [Auto Delete Messages](#auto-delete-message)
+- [Auto Start Thread](#auto-start-thread)
 
 ## Anonymous Message
 
