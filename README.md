@@ -33,6 +33,8 @@ npm run build # to build renn
 npm start # to run bot in production
 ```
 
+[Invite](https://discordjs.guide/preparations/adding-your-bot-to-servers.html#bot-invite-links) to your server
+
 ## Features
 
 Commands:
