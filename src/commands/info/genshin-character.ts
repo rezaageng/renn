@@ -1,6 +1,7 @@
 import { Command } from "../../structures/Command"
 import genshindb from "genshin-db"
 import { MessageEmbed } from "discord.js"
+import { asc } from "../../typings/GenshinDb"
 
 export default new Command({
   name: "genshin-character",
@@ -62,62 +63,6 @@ export default new Command({
         ephemeral: true,
       })
 
-    if (statsLevel) {
-      const levelAcs = statsLevel.slice(2)
-      const charaStats = data.stats(
-        statsLevel.slice(0, 2) as unknown as number,
-        levelAcs ? "+" : "-"
-      )
-
-      if (!charaStats)
-        return interaction.reply({
-          content: "Please enter a valid level",
-          ephemeral: true,
-        })
-
-      const charaStatsEmbed = new MessageEmbed()
-        .setColor("#712B75")
-        .setThumbnail(data.images.icon)
-        .setTitle(data.name)
-        .addFields(
-          {
-            name: "Level",
-            value: `${charaStats.level}`,
-            inline: true,
-          },
-          {
-            name: "Ascension",
-            value: `${charaStats.ascension}`,
-            inline: true,
-          },
-          {
-            name: "HP",
-            value: `${Math.round(charaStats.hp)}`,
-            inline: true,
-          },
-          {
-            name: "Attack",
-            value: `${Math.round(charaStats.attack)}`,
-            inline: true,
-          },
-          {
-            name: "Defense",
-            value: `${Math.round(charaStats.defense)}`,
-            inline: true,
-          },
-          {
-            name: `${data.substat}`,
-            value: `${
-              data.substat !== "Elemental Mastery"
-                ? Math.round(charaStats.specialized * 100) + "%"
-                : Math.round(charaStats.specialized)
-            }`,
-          }
-        )
-
-      return await interaction.reply({ embeds: [charaStatsEmbed] })
-    }
-
     if (ascension) {
       const charaAscension = data.costs
 
@@ -128,7 +73,7 @@ export default new Command({
         })
       }
 
-      const charaascensionEmbed = new MessageEmbed()
+      const charaAscensionEmbed = new MessageEmbed()
         .setColor("#712B75")
         .setThumbnail(data.images.icon)
         .setTitle(data.name)
@@ -171,8 +116,20 @@ export default new Command({
               }))
         )
 
-      return await interaction.reply({ embeds: [charaascensionEmbed] })
+      return await interaction.reply({ embeds: [charaAscensionEmbed] })
     }
+
+    const ascend = statsLevel && statsLevel.slice(2)
+    const charaStats = data.stats(
+      statsLevel ? (statsLevel.slice(0, 2) as unknown as number) : 90,
+      (statsLevel ? ascend : "-") as asc
+    )
+
+    if (!charaStats || (statsLevel && ascend !== "" && ascend !== "+"))
+      return interaction.reply({
+        content: "Please enter a valid level",
+        ephemeral: true,
+      })
 
     const characterEmbed = new MessageEmbed()
       .setColor("#712B75")
@@ -206,7 +163,42 @@ export default new Command({
         { name: "English VA", value: data.cv.english, inline: true },
         { name: "Japanese VA", value: data.cv.japanese, inline: true },
         { name: "Chinese VA", value: data.cv.chinese, inline: true },
-        { name: "Korean VA", value: data.cv.korean, inline: true }
+        { name: "Korean VA", value: data.cv.korean, inline: true },
+        { name: "Stats", value: `${data.name}'s stats`, inline: false },
+        {
+          name: "Level",
+          value: `${charaStats.level}`,
+          inline: true,
+        },
+        {
+          name: "Ascension",
+          value: `${charaStats.ascension}`,
+          inline: true,
+        },
+        {
+          name: "HP",
+          value: `${Math.round(charaStats.hp)}`,
+          inline: true,
+        },
+        {
+          name: "Attack",
+          value: `${Math.round(charaStats.attack)}`,
+          inline: true,
+        },
+        {
+          name: "Defense",
+          value: `${Math.round(charaStats.defense)}`,
+          inline: true,
+        },
+        {
+          name: `${data.substat}`,
+          value: `${
+            data.substat !== "Elemental Mastery"
+              ? Math.round(charaStats.specialized * 100) + "%"
+              : Math.round(charaStats.specialized)
+          }`,
+          inline: true,
+        }
       )
 
     return await interaction.reply({ embeds: [characterEmbed] })

@@ -10,3 +10,4 @@ export interface TalentAttributes {
   labels: string[]
   parameters: { [key: string]: number[] }
 }
+export type asc = number | "+" | "-"
