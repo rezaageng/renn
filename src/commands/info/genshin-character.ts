@@ -177,25 +177,25 @@ export default new Command({
         },
         {
           name: "HP",
-          value: `${Math.round(charaStats.hp)}`,
+          value: `${charaStats.hp.toFixed(0)}`,
           inline: true,
         },
         {
           name: "Attack",
-          value: `${Math.round(charaStats.attack)}`,
+          value: `${charaStats.attack.toFixed(0)}`,
           inline: true,
         },
         {
           name: "Defense",
-          value: `${Math.round(charaStats.defense)}`,
+          value: `${charaStats.defense.toFixed(0)}`,
           inline: true,
         },
         {
           name: `${data.substat}`,
           value: `${
             data.substat !== "Elemental Mastery"
-              ? Math.round(charaStats.specialized * 100) + "%"
-              : Math.round(charaStats.specialized)
+              ? (charaStats.specialized * 100).toFixed(1) + "%"
+              : charaStats.specialized.toFixed(0)
           }`,
           inline: true,
         }
