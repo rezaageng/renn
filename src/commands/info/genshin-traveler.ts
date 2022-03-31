@@ -2,7 +2,7 @@ import { createCanvas, Image, loadImage, registerFont } from "canvas"
 import { MessageAttachment } from "discord.js"
 import { Hoyo } from "../../functions/genshin-kit"
 import { Command } from "../../structures/Command"
-import { ExtendedUserStats } from "../../typings/GenshinKit"
+import { ExtendedCharacter, ExtendedUserStats } from "../../typings/GenshinKit"
 
 export default new Command({
   name: "genshin-traveler",
@@ -22,7 +22,9 @@ export default new Command({
       const data = await Hoyo.getUserInfo(uid)
       const stats = data.stats as ExtendedUserStats
       const world = data.world_explorations
-      console.log(world)
+      const chara = data.avatars.slice(0, 20) as ExtendedCharacter[]
+
+      await interaction.deferReply()
 
       const Avatar = {
         size: 256,
@@ -32,7 +34,16 @@ export default new Command({
 
       registerFont("./src/assets/fonts/ja-jp.ttf", { family: "Genshin" })
 
-      const canvas = createCanvas(1200, 1280)
+      const canvas = createCanvas(
+        1200,
+        chara.length > 15
+          ? 1940
+          : chara.length > 10 && chara.length <= 15
+          ? 1750
+          : chara.length > 5 && chara.length <= 10
+          ? 1500
+          : 1280
+      )
       const ctx = canvas.getContext("2d")
       // * Background
       ctx.fillStyle = "rgb(17, 24, 39)"
@@ -136,7 +147,6 @@ export default new Command({
       const worldImg = await Promise.all(
         world.map(async (w) => await loadImage(w.icon))
       )
-      console.log(worldImg)
 
       const resizeImg = (img: Image, x: number, y: number, scale: number) => {
         ctx.save()
@@ -170,16 +180,48 @@ export default new Command({
       ctx.fillText(`${world[3].exploration_percentage / 10}%`, 820, 942)
       ctx.fillText(`${world[4].exploration_percentage / 10}%`, 1040, 942)
 
+      // * Characters
+      const charaImg1 = await Promise.all(
+        chara.slice(0, 5).map(async (c) => await loadImage(c.card_image))
+      )
+
+      const charaImg2 = await Promise.all(
+        chara.slice(5, 10).map(async (c) => await loadImage(c.card_image))
+      )
+      const charaImg3 = await Promise.all(
+        chara.slice(10, 15).map(async (c) => await loadImage(c.card_image))
+      )
+      const charaImg4 = await Promise.all(
+        chara.slice(15, 20).map(async (c) => await loadImage(c.card_image))
+      )
+
+      charaImg1.length !== 0 &&
+        charaImg1.forEach((img, i) => resizeImg(img, 50 + i * 225, 1030, 0.8))
+      charaImg2.length !== 0 &&
+        charaImg2.forEach((img, i) => resizeImg(img, 50 + i * 225, 1250, 0.8))
+      charaImg3.length !== 0 &&
+        charaImg3.forEach((img, i) => resizeImg(img, 50 + i * 225, 1470, 0.8))
+      charaImg4.length !== 0 &&
+        charaImg4.forEach((img, i) => resizeImg(img, 50 + i * 225, 1690, 0.8))
+
       const attachement = new MessageAttachment(
         canvas.toBuffer(),
         `renn-hoyo-${uid}.png`
       )
 
-      return await interaction.reply({ files: [attachement] })
+      return await interaction.followUp({ files: [attachement] })
     } catch (error) {
-      console.error(error)
+      console.error(error.message)
+
+      if (interaction.replied || interaction.deferred)
+        return await interaction.followUp({
+          content:
+            "Something wrong when trying generate image!\nPlease try again later.",
+        })
+
       return await interaction.reply({
-        content: error.message,
+        content:
+          "Invalid UID or the data is not public!\nClick [here](https://www.hoyolab.com/setting/privacy) to change your Battle Chronicle privacy settings.",
         ephemeral: true,
       })
     }

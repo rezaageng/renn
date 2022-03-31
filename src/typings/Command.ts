@@ -3,8 +3,10 @@ import {
   CommandInteraction,
   CommandInteractionOptionResolver,
   GuildMember,
+  Message,
   PermissionResolvable,
 } from "discord.js"
+import { APIMessage } from "discord-api-types"
 import { ExtendedClient } from "../structures/Client"
 
 export interface ExtendedInteraction extends CommandInteraction {
@@ -17,7 +19,9 @@ interface RunCommandOptions {
   args: CommandInteractionOptionResolver
 }
 
-type RunCommandFunction = (options: RunCommandOptions) => Promise<void>
+type RunCommandFunction = (
+  options: RunCommandOptions
+) => Promise<void | Message | APIMessage>
 
 export type CommandType = {
   userPermissions?: PermissionResolvable[]
