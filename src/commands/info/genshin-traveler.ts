@@ -37,12 +37,12 @@ export default new Command({
       const canvas = createCanvas(
         1200,
         chara.length > 15
-          ? 1940
+          ? 2160
           : chara.length > 10 && chara.length <= 15
-          ? 1750
+          ? 1880
           : chara.length > 5 && chara.length <= 10
-          ? 1500
-          : 1280
+          ? 1596
+          : 1316
       )
       const ctx = canvas.getContext("2d")
       // * Background
@@ -246,9 +246,55 @@ export default new Command({
           ctx.fillText(`Lv. ${chara[i + 5].level}`, 50 + i * 225 + 100, 1534)
         })
       charaImg3.length !== 0 &&
-        charaImg3.forEach((img, i) => resizeImg(img, 50 + i * 225, 1480, 0.5))
+        charaImg3.forEach((img, i) => {
+          ctx.fillStyle = "#312e81"
+          ctx.fillRect(50 + i * 225, 1760, 200, 70)
+
+          ctx.fillStyle = "rgb(31, 41, 55)"
+          ctx.fillRect(50 + i * 225, 1580, 200, 200)
+
+          resizeImg(img, 50 + i * 225, 1580, 0.78)
+
+          ctx.strokeStyle = "#ffffff"
+          ctx.beginPath()
+          ctx.moveTo(50 + i * 225, 1580)
+          ctx.lineTo(50 + i * 225 + 200, 1580)
+          ctx.lineTo(50 + i * 225 + 200, 1830)
+          ctx.lineTo(50 + i * 225, 1830)
+          ctx.lineTo(50 + i * 225, 1580)
+          ctx.stroke()
+          ctx.closePath()
+
+          ctx.fillStyle = "#ffffff"
+          ctx.textAlign = "center"
+          ctx.font = "24px 'Genshin'"
+          ctx.fillText(`Lv. ${chara[i + 10].level}`, 50 + i * 225 + 100, 1814)
+        })
       charaImg4.length !== 0 &&
-        charaImg4.forEach((img, i) => resizeImg(img, 50 + i * 225, 1700, 0.5))
+        charaImg4.forEach((img, i) => {
+          ctx.fillStyle = "#312e81"
+          ctx.fillRect(50 + i * 225, 2040, 200, 70)
+
+          ctx.fillStyle = "rgb(31, 41, 55)"
+          ctx.fillRect(50 + i * 225, 1860, 200, 200)
+
+          resizeImg(img, 50 + i * 225, 1860, 0.78)
+
+          ctx.strokeStyle = "#ffffff"
+          ctx.beginPath()
+          ctx.moveTo(50 + i * 225, 1860)
+          ctx.lineTo(50 + i * 225 + 200, 1860)
+          ctx.lineTo(50 + i * 225 + 200, 2110)
+          ctx.lineTo(50 + i * 225, 2110)
+          ctx.lineTo(50 + i * 225, 1860)
+          ctx.stroke()
+          ctx.closePath()
+
+          ctx.fillStyle = "#ffffff"
+          ctx.textAlign = "center"
+          ctx.font = "24px 'Genshin'"
+          ctx.fillText(`Lv. ${chara[i + 15].level}`, 50 + i * 225 + 100, 2094)
+        })
 
       const attachement = new MessageAttachment(
         canvas.toBuffer(),
