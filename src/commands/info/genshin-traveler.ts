@@ -1,6 +1,7 @@
 import { createCanvas, Image, loadImage, registerFont } from "canvas"
 import { MessageAttachment } from "discord.js"
-import { Hoyo } from "../../functions/genshin-kit"
+import { Hoyo } from "../.."
+
 import { Command } from "../../structures/Command"
 import { ExtendedCharacter, ExtendedUserStats } from "../../typings/GenshinKit"
 
@@ -17,6 +18,15 @@ export default new Command({
   ],
   run: async ({ interaction }) => {
     const uid = interaction.options.getInteger("uid")
+
+    if (
+      interaction.channelId !== process.env.COMMANDS_CHANNEL_ID &&
+      interaction.channelId !== process.env.DEBUG_CHANNEL_ID
+    )
+      return await interaction.reply({
+        content: `Please use this command in  <#${process.env.COMMANDS_CHANNEL_ID}>`,
+        ephemeral: true,
+      })
 
     try {
       const data = await Hoyo.getUserInfo(uid)
