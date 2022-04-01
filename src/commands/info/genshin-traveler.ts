@@ -182,27 +182,73 @@ export default new Command({
 
       // * Characters
       const charaImg1 = await Promise.all(
-        chara.slice(0, 5).map(async (c) => await loadImage(c.card_image))
+        chara.slice(0, 5).map(async (c) => await loadImage(c.image))
       )
 
       const charaImg2 = await Promise.all(
-        chara.slice(5, 10).map(async (c) => await loadImage(c.card_image))
+        chara.slice(5, 10).map(async (c) => await loadImage(c.image))
       )
       const charaImg3 = await Promise.all(
-        chara.slice(10, 15).map(async (c) => await loadImage(c.card_image))
+        chara.slice(10, 15).map(async (c) => await loadImage(c.image))
       )
       const charaImg4 = await Promise.all(
-        chara.slice(15, 20).map(async (c) => await loadImage(c.card_image))
+        chara.slice(15, 20).map(async (c) => await loadImage(c.image))
       )
 
       charaImg1.length !== 0 &&
-        charaImg1.forEach((img, i) => resizeImg(img, 50 + i * 225, 1030, 0.8))
+        charaImg1.forEach((img, i) => {
+          ctx.fillStyle = "#312e81"
+          ctx.fillRect(50 + i * 225, 1200, 200, 70)
+
+          ctx.fillStyle = "rgb(31, 41, 55)"
+          ctx.fillRect(50 + i * 225, 1020, 200, 200)
+
+          resizeImg(img, 50 + i * 225, 1020, 0.78)
+
+          ctx.strokeStyle = "#ffffff"
+          ctx.beginPath()
+          ctx.moveTo(50 + i * 225, 1020)
+          ctx.lineTo(50 + i * 225 + 200, 1020)
+          ctx.lineTo(50 + i * 225 + 200, 1270)
+          ctx.lineTo(50 + i * 225, 1270)
+          ctx.lineTo(50 + i * 225, 1020)
+          ctx.stroke()
+          ctx.closePath()
+
+          ctx.fillStyle = "#ffffff"
+          ctx.textAlign = "center"
+          ctx.font = "24px 'Genshin'"
+          ctx.fillText(`Lv. ${chara[i].level}`, 50 + i * 225 + 100, 1254)
+        })
       charaImg2.length !== 0 &&
-        charaImg2.forEach((img, i) => resizeImg(img, 50 + i * 225, 1250, 0.8))
+        charaImg2.forEach((img, i) => {
+          ctx.fillStyle = "#312e81"
+          ctx.fillRect(50 + i * 225, 1480, 200, 70)
+
+          ctx.fillStyle = "rgb(31, 41, 55)"
+          ctx.fillRect(50 + i * 225, 1300, 200, 200)
+
+          resizeImg(img, 50 + i * 225, 1300, 0.78)
+
+          ctx.strokeStyle = "#ffffff"
+          ctx.beginPath()
+          ctx.moveTo(50 + i * 225, 1300)
+          ctx.lineTo(50 + i * 225 + 200, 1300)
+          ctx.lineTo(50 + i * 225 + 200, 1550)
+          ctx.lineTo(50 + i * 225, 1550)
+          ctx.lineTo(50 + i * 225, 1300)
+          ctx.stroke()
+          ctx.closePath()
+
+          ctx.fillStyle = "#ffffff"
+          ctx.textAlign = "center"
+          ctx.font = "24px 'Genshin'"
+          ctx.fillText(`Lv. ${chara[i + 5].level}`, 50 + i * 225 + 100, 1534)
+        })
       charaImg3.length !== 0 &&
-        charaImg3.forEach((img, i) => resizeImg(img, 50 + i * 225, 1470, 0.8))
+        charaImg3.forEach((img, i) => resizeImg(img, 50 + i * 225, 1480, 0.5))
       charaImg4.length !== 0 &&
-        charaImg4.forEach((img, i) => resizeImg(img, 50 + i * 225, 1690, 0.8))
+        charaImg4.forEach((img, i) => resizeImg(img, 50 + i * 225, 1700, 0.5))
 
       const attachement = new MessageAttachment(
         canvas.toBuffer(),
