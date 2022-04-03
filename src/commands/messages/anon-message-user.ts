@@ -18,7 +18,7 @@ export default new Command({
       required: false,
     },
     {
-      name: "user",
+      name: "user-id",
       description: "select user by user id",
       type: "STRING",
       required: false,
@@ -29,7 +29,7 @@ export default new Command({
     const serverMember = interaction.options.getMember(
       "server-member"
     ) as GuildMember
-    const user = interaction.options.getString("user")
+    const user = interaction.options.getString("user-id")
 
     if (
       interaction.channel.type !== "DM" &&
@@ -65,9 +65,19 @@ export default new Command({
 
     if (user) {
       const userId = await client.users.fetch(user)
+      const mutualGuilds = client.guilds.cache.filter((guild) => {
+        return guild.members.cache.has(userId.id)
+      })
+
       if (userId.bot)
         return await interaction.reply({
           content: "Can't send message to bot!",
+          ephemeral: true,
+        })
+
+      if (mutualGuilds.size === 0)
+        return await interaction.reply({
+          content: "User not in any mutual discord server with me",
           ephemeral: true,
         })
 
