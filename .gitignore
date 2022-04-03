@@ -5,3 +5,5 @@ dist/
 .env*
 !.env.project
 !.env.example
+
+.pnpm-debug.log
