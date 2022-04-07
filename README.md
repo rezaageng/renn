@@ -24,7 +24,7 @@ Install all dependencies:
 npm install
 ```
 
-Rename `.env.example` to `.env` then fill with your own [token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot) & [necessary id](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-)
+Rename `.env.example` to `.env` then fill with your own [Token](https://discordjs.guide/preparations/setting-up-a-bot-application.html#creating-your-bot), [Necessary Id](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-), and [HoYoLab Cookies](./HOYOLAB.md)
 
 After the installation is complete:
 
