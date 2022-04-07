@@ -3,7 +3,7 @@
 <h1 align="center">🐈‍⬛ renn 🎭</h1>
 
 <div align="center">
-  <img src="https://img.shields.io/badge/Discord-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white" alt="">
+  <img src="https://img.shields.io/badge/Discord.js-%237289DA.svg?style=for-the-badge&logo=discord&logoColor=white" alt="">
   <img src="https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white" alt="">
   <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" alt="">
   <img src="https://img.shields.io/codefactor/grade/github/rezaageng/renn?style=for-the-badge" alt="CodeFactor Grade">
@@ -49,6 +49,7 @@ Commands:
 
 Others:
 
+- [Auto Add Role](#auto-add-role)
 - [Auto Delete Messages](#auto-delete-message)
 - [Auto Start Thread](#auto-start-thread)
 
@@ -103,6 +104,10 @@ Send suggestion to suggestions text channel
 /suggestion
 ```
 
+## Auto Add Role
+
+Automatically add role to new member
+
 ## Auto Delete Message
 
 If someone accidentally send message to anonymous commands channel, the message automatically deleted
@@ -110,7 +115,3 @@ If someone accidentally send message to anonymous commands channel, the message 
 ## Auto Start Thread
 
 If someone or renn send message to specific text channels, renn will automatically start thread for the message
-
-## Auto Add Role
-
-Automatically add role to new member
