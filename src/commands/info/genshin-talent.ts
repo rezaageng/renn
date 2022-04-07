@@ -95,7 +95,7 @@ export default new Command({
       (level && talentCosts)
     )
       return await interaction.reply({
-        content: "Level not needed",
+        content: "Level not needed for talent costs, passive, and special",
         ephemeral: true,
       })
 

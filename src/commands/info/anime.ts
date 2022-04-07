@@ -80,7 +80,7 @@ export default new Command({
           inline: true,
         },
         {
-          name: ":film_frames: Duration",
+          name: ":stopwatch: Duration",
           value: `${
             anime.attributes.episodeLength || "?"
           } minutes per episodes`,
