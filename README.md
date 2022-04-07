@@ -72,7 +72,7 @@ Search anime & manga from [Kitsu](https://kitsu.io/) database
 
 ## Genshin Impact DataBase
 
-Search characters, enemies, artifact, constellations, material, talent and weapon from [Genshin Impact](https://genshin.hoyoverse.com/en)
+Search characters, enemies, artifact, constellations, material, talent, weapon and traveler from [Genshin Impact](https://genshin.hoyoverse.com/en)
 
 ```
 /genshin
@@ -110,3 +110,7 @@ If someone accidentally send message to anonymous commands channel, the message 
 ## Auto Start Thread
 
 If someone or renn send message to specific text channels, renn will automatically start thread for the message
+
+## Auto Add Role
+
+Automatically add role to new member
