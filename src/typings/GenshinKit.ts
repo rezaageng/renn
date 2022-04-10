@@ -9,3 +9,5 @@ export interface ExtendedUserStats extends UserStats {
 export interface ExtendedCharacter extends Character {
   card_image: string
 }
+
+export type Phase = 1 | 2
