@@ -1,6 +1,7 @@
-import { createCanvas, Image, loadImage, registerFont } from "canvas"
+import { createCanvas, loadImage, registerFont } from "canvas"
 import { MessageAttachment } from "discord.js"
 import { Hoyo } from "../.."
+import { resizeImg } from "../../functions/genshin-kit"
 
 import { Command } from "../../structures/Command"
 import { ExtendedCharacter, ExtendedUserStats } from "../../typings/GenshinKit"
@@ -158,19 +159,11 @@ export default new Command({
         world.map(async (w) => await loadImage(w.icon))
       )
 
-      const resizeImg = (img: Image, x: number, y: number, scale: number) => {
-        ctx.save()
-        ctx.translate(x, y)
-        ctx.scale(scale, scale)
-        ctx.drawImage(img, 0, 0)
-        ctx.restore()
-      }
-
-      resizeImg(worldImg[0], 95, 756, 0.5)
-      resizeImg(worldImg[1], 310, 752, 0.75)
-      resizeImg(worldImg[2], 525, 752, 0.8)
-      resizeImg(worldImg[3], 745, 756, 0.58)
-      resizeImg(worldImg[4], 975, 756, 0.5)
+      resizeImg(ctx, worldImg[0], 95, 756, 0.5)
+      resizeImg(ctx, worldImg[1], 310, 752, 0.75)
+      resizeImg(ctx, worldImg[2], 525, 752, 0.8)
+      resizeImg(ctx, worldImg[3], 745, 756, 0.58)
+      resizeImg(ctx, worldImg[4], 975, 756, 0.5)
 
       ctx.fillStyle = "#ffffff"
       ctx.textAlign = "center"
@@ -213,7 +206,7 @@ export default new Command({
           ctx.fillStyle = "rgb(31, 41, 55)"
           ctx.fillRect(50 + i * 225, 1020, 200, 200)
 
-          resizeImg(img, 50 + i * 225, 1020, 0.78)
+          resizeImg(ctx, img, 50 + i * 225, 1020, 0.78)
 
           ctx.strokeStyle = "#ffffff"
           ctx.beginPath()
@@ -238,7 +231,7 @@ export default new Command({
           ctx.fillStyle = "rgb(31, 41, 55)"
           ctx.fillRect(50 + i * 225, 1300, 200, 200)
 
-          resizeImg(img, 50 + i * 225, 1300, 0.78)
+          resizeImg(ctx, img, 50 + i * 225, 1300, 0.78)
 
           ctx.strokeStyle = "#ffffff"
           ctx.beginPath()
@@ -263,7 +256,7 @@ export default new Command({
           ctx.fillStyle = "rgb(31, 41, 55)"
           ctx.fillRect(50 + i * 225, 1580, 200, 200)
 
-          resizeImg(img, 50 + i * 225, 1580, 0.78)
+          resizeImg(ctx, img, 50 + i * 225, 1580, 0.78)
 
           ctx.strokeStyle = "#ffffff"
           ctx.beginPath()
@@ -288,7 +281,7 @@ export default new Command({
           ctx.fillStyle = "rgb(31, 41, 55)"
           ctx.fillRect(50 + i * 225, 1860, 200, 200)
 
-          resizeImg(img, 50 + i * 225, 1860, 0.78)
+          resizeImg(ctx, img, 50 + i * 225, 1860, 0.78)
 
           ctx.strokeStyle = "#ffffff"
           ctx.beginPath()
